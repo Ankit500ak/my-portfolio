@@ -1,181 +1,142 @@
-# Personal Portfolio Website
 
-A modern, responsive portfolio website built with Next.js, TypeScript, and React Three Fiber.
+<h1 align="center">🌐 Personal Portfolio Website</h1>
+<p align="center">
+  A modern, 3D-interactive, responsive portfolio site built with <strong>Next.js 14</strong>, <strong>TypeScript</strong>, and <strong>React Three Fiber</strong>. Perfect for showcasing your work and creativity.
+</p>
 
-## Features
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-v14-blue?logo=nextdotjs" />
+  <img src="https://img.shields.io/badge/TypeScript-Strict-blue?logo=typescript" />
+  <img src="https://img.shields.io/badge/TailwindCSS-3.0-brightgreen?logo=tailwindcss" />
+  <img src="https://img.shields.io/badge/React--Three--Fiber-3D-orange?logo=three.js" />
+</p>
 
-- ✨ Modern and clean design
-- 🎨 Fully responsive layout
-- 🎯 Interactive 3D model showcase
-- 🎨 Dark/Light theme support
-- 📱 Mobile-friendly design
-- 🚀 Optimized performance
-- 💻 Cross-browser compatibility
+---
 
-## Tech Stack
+## ✨ Features
 
-- **Framework**: Next.js 14
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: Radix UI
-- **3D Graphics**: React Three Fiber
-- **Form Handling**: React Hook Form
-- **Animation**: Framer Motion
+- 🚀 **Modern Design** – Sleek, clean and minimal layout
+- 🌀 **3D Model Showcase** – Powered by React Three Fiber
+- 🌗 **Dark/Light Theme Toggle**
+- 📱 **Responsive** – Mobile-friendly and tablet-optimized
+- ⚡ **Optimized Performance** – Fast load times and smooth UX
+- 💬 **Interactive Contact Form** – With React Hook Form
+- 🎯 **Fully Customizable** – Plug and play for your brand
 
-## Getting Started
+---
 
-### Prerequisites
+## 🛠️ Tech Stack
 
-- Node.js (v18 or higher)
-- npm or pnpm
+| Category        | Tech                     |
+|----------------|--------------------------|
+| **Framework**   | [Next.js 14](https://nextjs.org/) |
+| **Language**    | TypeScript               |
+| **Styling**     | Tailwind CSS             |
+| **3D Graphics** | React Three Fiber, Drei  |
+| **Animations**  | Framer Motion            |
+| **Forms**       | React Hook Form          |
+| **UI Toolkit**  | Radix UI                 |
 
-### Installation
+---
 
-1. Clone the repository:
+## 🚀 Getting Started
+
+### ✅ Prerequisites
+
+Ensure you have the following installed:
+- **Node.js** v18 or above
+- **pnpm** (recommended) or **npm**
+
+### 📦 Installation
+
 ```bash
-git clone [https://github.com/your-username/my-portfolio.git](https://github.com/your-username/my-portfolio.git)
+# Clone the repository
+git clone https://github.com/your-username/my-portfolio.git
 cd my-portfolio
-Install dependencies:
-bash
-CopyInsert in Terminal
+
+# Install dependencies
 pnpm install
-Start the development server:
-bash
-CopyInsert in Terminal
+
+# Start development server
 pnpm dev
-Open http://localhost:3000 to view it in your browser.
-Project Structure
-CopyInsert
+```
+
+Visit `http://localhost:3000` in your browser 🚀
+
+---
+
+## 📁 Project Structure
+
+```
 portfolio-website/
-├── app/                # Next.js app directory
-├── components/         # Reusable React components
-├── hooks/             # Custom React hooks
-├── lib/               # Utility functions
-├── public/            # Static assets
-├── styles/            # Global styles
-└── data/              # Project data
-Development
-Available Scripts
-pnpm dev - Runs the app in development mode
-pnpm build - Builds the app for production
-pnpm start - Starts the production server
-pnpm lint - Runs ESLint for code linting
-Environment Variables
-Create a .env.local file in the root directory with the following variables:
+├── app/           # Next.js App Router Pages
+├── components/    # Reusable React Components
+├── hooks/         # Custom Hooks
+├── lib/           # Utility functions
+├── public/        # Static Assets
+├── styles/        # Global CSS and Tailwind configs
+└── data/          # Portfolio Data (Projects, Info, etc.)
+```
 
-env
-CopyInsert
-NEXT_PUBLIC_API_KEY=your_api_key
-Contributing
-Fork the repository
-Create your feature branch (git checkout -b feature/AmazingFeature)
-Commit your changes (git commit -m 'Add some AmazingFeature')
-Push to the branch (git push origin feature/AmazingFeature)
-Open a Pull Request
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+---
 
-Acknowledgments
-Next.js
-Tailwind CSS
-React Three Fiber
-Radix UI
-CopyInsert
+## 🧪 Available Scripts
 
-Would you like me to help you create this README.md file? I can also assist you with pushing the changes to GitHub once you've created the repository. Let me know if you need any adjustments to the README content!
-Feedback submitted
-Me
+| Command         | Description                          |
+|----------------|--------------------------------------|
+| `pnpm dev`      | Start development server             |
+| `pnpm build`    | Build for production                 |
+| `pnpm start`    | Start production server              |
+| `pnpm lint`     | Run ESLint to check for issues       |
 
-yes crete it
+---
 
-I'll help you create the README.md file for your portfolio website. Let me propose the code to create it:
+## 🔐 Environment Variables
 
-Cascade error
-Cascade cannot propose edits to files that do not exist.
-Details
-I'll help you create the README.md file for your portfolio website. Here's the content you can use:
+Create a `.env.local` file in the root directory:
 
-markdown
-CopyInsert
-# Personal Portfolio Website
+```env
+NEXT_PUBLIC_API_KEY=your_api_key_here
+```
 
-A modern, responsive portfolio website built with Next.js, TypeScript, and React Three Fiber.
+---
 
-## Features
+## 🤝 Contributing
 
-- ✨ Modern and clean design
-- 🎨 Fully responsive layout
-- 🎯 Interactive 3D model showcase
-- 🎨 Dark/Light theme support
-- 📱 Mobile-friendly design
-- 🚀 Optimized performance
-- 💻 Cross-browser compatibility
+Want to improve this project? Here’s how:
 
-## Tech Stack
-
-- **Framework**: Next.js 14
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: Radix UI
-- **3D Graphics**: React Three Fiber
-- **Form Handling**: React Hook Form
-- **Animation**: Framer Motion
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v18 or higher)
-- npm or pnpm
-
-### Installation
-
-1. Clone the repository:
 ```bash
-git clone [https://github.com/your-username/my-portfolio.git](https://github.com/your-username/my-portfolio.git)
-cd my-portfolio
-Install dependencies:
-bash
-CopyInsert in Terminal
-pnpm install
-Start the development server:
-bash
-CopyInsert in Terminal
-pnpm dev
-Open http://localhost:3000 to view it in your browser.
-Project Structure
-CopyInsert
-portfolio-website/
-├── app/                # Next.js app directory
-├── components/         # Reusable React components
-├── hooks/             # Custom React hooks
-├── lib/               # Utility functions
-├── public/            # Static assets
-├── styles/            # Global styles
-└── data/              # Project data
-Development
-Available Scripts
-pnpm dev - Runs the app in development mode
-pnpm build - Builds the app for production
-pnpm start - Starts the production server
-pnpm lint - Runs ESLint for code linting
-Environment Variables
-Create a .env.local file in the root directory with the following variables:
+# Fork the repo
+# Create your feature branch
+git checkout -b feature/AmazingFeature
 
-env
-CopyInsert
-NEXT_PUBLIC_API_KEY=your_api_key
-Contributing
-Fork the repository
-Create your feature branch (git checkout -b feature/AmazingFeature)
-Commit your changes (git commit -m 'Add some AmazingFeature')
-Push to the branch (git push origin feature/AmazingFeature)
-Open a Pull Request
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+# Commit your changes
+git commit -m "Add AmazingFeature"
 
-Acknowledgments
-Next.js
-Tailwind CSS
-React Three Fiber
-Radix UI
+# Push to the branch
+git push origin feature/AmazingFeature
+
+# Open a Pull Request on GitHub 🚀
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.  
+See the [LICENSE](./LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgements
+
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/)
+- [Radix UI](https://www.radix-ui.com/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [React Hook Form](https://react-hook-form.com/)
+
+---
+
+> Built with ❤️ by Ankit Pal (ankit200211222@gmail.com)
