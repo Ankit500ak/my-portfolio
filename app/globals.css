@@ -1,0 +1,362 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 230 20% 5%;
+    --foreground: 210 40% 98%;
+
+    --card: 230 20% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 230 20% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 230 100% 65%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 160 100% 50%;
+    --secondary-foreground: 210 40% 98%;
+
+    --accent: 280 100% 60%;
+    --accent-foreground: 210 40% 98%;
+
+    --muted: 230 20% 15%;
+    --muted-foreground: 210 40% 70%;
+
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 230 20% 15%;
+    --input: 230 20% 15%;
+    --ring: 230 100% 65%;
+
+    --radius: 0.5rem;
+
+    /* RGB values for rgba() usage */
+    --primary-rgb: 66 133 244;
+    --secondary-rgb: 0 204 136;
+    --accent-rgb: 153 51 255;
+    --background-rgb: 13 17 23;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 230 20% 10%;
+    --card: 0 0% 98%;
+    --card-foreground: 230 20% 10%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 230 20% 10%;
+    --primary: 230 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 160 100% 40%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 280 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --muted: 230 20% 96%;
+    --muted-foreground: 230 20% 40%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 230 20% 90%;
+    --input: 230 20% 90%;
+    --ring: 230 100% 50%;
+
+    --primary-rgb: 0 102 255;
+    --secondary-rgb: 0 179 128;
+    --accent-rgb: 153 51 255;
+    --background-rgb: 255 255 255;
+  }
+
+  .golden {
+    --background: 40 30% 5%;
+    --foreground: 40 30% 90%;
+    --card: 40 30% 8%;
+    --card-foreground: 40 30% 90%;
+    --popover: 40 30% 8%;
+    --popover-foreground: 40 30% 90%;
+    --primary: 40 100% 60%;
+    --primary-foreground: 40 30% 5%;
+    --secondary: 25 100% 50%;
+    --secondary-foreground: 40 30% 5%;
+    --accent: 55 100% 60%;
+    --accent-foreground: 40 30% 5%;
+    --muted: 40 30% 15%;
+    --muted-foreground: 40 30% 70%;
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 40 30% 5%;
+    --border: 40 30% 15%;
+    --input: 40 30% 15%;
+    --ring: 40 100% 60%;
+
+    --primary-rgb: 255 191 0;
+    --secondary-rgb: 255 128 0;
+    --accent-rgb: 255 215 0;
+    --background-rgb: 13 10 5;
+  }
+
+  .neon {
+    --background: 260 20% 5%;
+    --foreground: 260 20% 95%;
+    --card: 260 20% 8%;
+    --card-foreground: 260 20% 95%;
+    --popover: 260 20% 8%;
+    --popover-foreground: 260 20% 95%;
+    --primary: 320 100% 60%;
+    --primary-foreground: 260 20% 5%;
+    --secondary: 180 100% 60%;
+    --secondary-foreground: 260 20% 5%;
+    --accent: 120 100% 60%;
+    --accent-foreground: 260 20% 5%;
+    --muted: 260 20% 15%;
+    --muted-foreground: 260 20% 70%;
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 260 20% 5%;
+    --border: 260 20% 15%;
+    --input: 260 20% 15%;
+    --ring: 320 100% 60%;
+
+    --primary-rgb: 255 0 153;
+    --secondary-rgb: 0 255 255;
+    --accent-rgb: 0 255 0;
+    --background-rgb: 13 10 23;
+  }
+
+  .black {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 90%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 90%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 90%;
+    --primary: 0 0% 80%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 60%;
+    --secondary-foreground: 0 0% 0%;
+    --accent: 0 0% 40%;
+    --accent-foreground: 0 0% 90%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 60%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 90%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 80%;
+
+    --primary-rgb: 204 204 204;
+    --secondary-rgb: 153 153 153;
+    --accent-rgb: 102 102 102;
+    --background-rgb: 0 0 0;
+  }
+
+  .cyberpunk {
+    --background: 235 80% 5%;
+    --foreground: 55 100% 70%;
+    --card: 235 80% 8%;
+    --card-foreground: 55 100% 70%;
+    --popover: 235 80% 8%;
+    --popover-foreground: 55 100% 70%;
+    --primary: 320 100% 60%;
+    --primary-foreground: 235 80% 5%;
+    --secondary: 180 100% 50%;
+    --secondary-foreground: 235 80% 5%;
+    --accent: 55 100% 60%;
+    --accent-foreground: 235 80% 5%;
+    --muted: 235 80% 15%;
+    --muted-foreground: 55 100% 50%;
+    --destructive: 0 100% 60%;
+    --destructive-foreground: 235 80% 5%;
+    --border: 235 80% 15%;
+    --input: 235 80% 15%;
+    --ring: 320 100% 60%;
+
+    --primary-rgb: 255 0 153;
+    --secondary-rgb: 0 255 255;
+    --accent-rgb: 255 230 0;
+    --background-rgb: 8 12 36;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    cursor: none;
+  }
+
+  /* Hide default cursor when custom cursor is active */
+  a,
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea {
+    cursor: none;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted/30;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/50 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/80;
+  }
+}
+
+.glow-text {
+  text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5), 0 0 20px rgba(var(--primary-rgb), 0.3), 0 0 30px
+    rgba(var(--primary-rgb), 0.1);
+}
+
+.glow-border {
+  box-shadow: 0 0 5px rgba(var(--primary-rgb), 0.5), 0 0 10px rgba(var(--primary-rgb), 0.3), inset 0 0 5px
+    rgba(var(--primary-rgb), 0.2);
+}
+
+.glow-card {
+  box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.1), 0 0 30px rgba(var(--primary-rgb), 0.05);
+}
+
+.glass {
+  @apply bg-background/30 backdrop-blur-md border border-white/10;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent;
+}
+
+.animate-in {
+  animation: animateIn 0.5s ease-in-out;
+}
+
+@keyframes animateIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.magnetic-button {
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.parallax {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.parallax-layer {
+  transform: translateZ(0);
+  transition: transform 0.1s ease-out;
+}
+
+.noise-bg {
+  position: relative;
+}
+
+.noise-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+/* Grid background */
+.grid-bg {
+  position: relative;
+}
+
+.grid-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to right, rgba(var(--primary-rgb), 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--primary-rgb), 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+}
+
+/* Reveal animation */
+.reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.reveal::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary);
+  transform: translateX(-100%);
+  animation: reveal 0.8s ease forwards;
+}
+
+@keyframes reveal {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Gradient border */
+.gradient-border {
+  position: relative;
+  border-radius: var(--radius);
+  background: linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(to right, var(--primary), var(--secondary)) border-box;
+  border: 1px solid transparent;
+}
+
+/* Animated gradient background */
+.animated-gradient {
+  background: linear-gradient(
+    -45deg,
+    rgba(var(--primary-rgb), 0.2),
+    rgba(var(--secondary-rgb), 0.2),
+    rgba(var(--accent-rgb), 0.2),
+    rgba(var(--primary-rgb), 0.2)
+  );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

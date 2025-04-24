@@ -1,0 +1,98 @@
+export const projects = [
+  {
+    id: 1,
+    title: "Voice Automation",
+    description: "Automated workflows of daily tasks in computer using advanced prompt engineering techniques.",
+    image: "/placeholder.svg?height=300&width=500",
+    tags: ["Python", "AI", "Prompt Engineering", "Automation"],
+    category: "fullstack",
+    demoUrl: "#",
+    githubUrl: "https://github.com/Ankit500ak",
+    details:
+      "This project automates daily computer tasks using advanced prompt engineering techniques, improving efficiency and reducing manual effort. The system can handle various workflows through voice commands, making computer interaction more intuitive and accessible.",
+  },
+  {
+    id: 2,
+    title: "Sample Research Paper Generator",
+    description: "Python-based application for fetching data, paraphrasing content, and generating structured PDFs.",
+    image: "/placeholder.svg?height=300&width=500",
+    tags: ["Python", "NLP", "PDF Generation", "Data Processing"],
+    category: "fullstack",
+    demoUrl: "#",
+    githubUrl: "https://github.com/Ankit500ak",
+    details:
+      "Created a Python-based application capable of fetching data, paraphrasing content, converting it into well-structured PDFs, and generating accompanying visual aids to streamline academic research. The tool helps researchers save time by automating the initial draft creation process.",
+  },
+  {
+    id: 3,
+    title: "Real-Time Book Management System",
+    description: "System for managing library operations with real-time status updates for users and administrators.",
+    image: "/placeholder.svg?height=300&width=500",
+    tags: ["React", "Node.js", "MongoDB", "WebSockets"],
+    category: "fullstack",
+    demoUrl: "#",
+    githubUrl: "https://github.com/Ankit500ak",
+    details:
+      "Designed and implemented a real-time system for managing library or inventory operations, enabling efficient tracking, borrowing, and returning of books with real-time status updates for users and administrators. The system features a responsive interface and robust backend architecture.",
+  },
+  {
+    id: 4,
+    title: "Code Weave",
+    description: "AI-powered platform using Python and Google APIs for guided iterative project creation.",
+    image: "/placeholder.svg?height=300&width=500",
+    tags: ["Python", "Google APIs", "AI", "Collaboration Tools"],
+    category: "fullstack",
+    demoUrl: "#",
+    githubUrl: "https://github.com/Ankit500ak",
+    details:
+      "Developing an AI-powered platform using Python and Google APIs, offering features like guided iterative project creation and real-time collaboration tools for teams. The platform aims to streamline the development process and enhance team productivity.",
+  },
+  {
+    id: 5,
+    title: "Multiplayer Quiz Game",
+    description: "Engaging real-time multiplayer quiz game with a sleek, user-friendly interface.",
+    image: "/placeholder.svg?height=300&width=500",
+    tags: ["JavaScript", "Socket.io", "Express", "MongoDB"],
+    category: "frontend",
+    demoUrl: "#",
+    githubUrl: "https://github.com/Ankit500ak",
+    details:
+      "Built an engaging real-time multiplayer quiz game with a sleek, user-friendly interface, providing a seamless experience for players. The game features various categories, difficulty levels, and real-time scoring to create an immersive and competitive environment.",
+  },
+  {
+    id: 6,
+    title: "Eco Mender",
+    description: "Sustainable tech solutions for optimizing cargo transportation in large-scale industries.",
+    image: "/placeholder.svg?height=300&width=500",
+    tags: ["Python", "Optimization Algorithms", "Data Analysis", "Sustainability"],
+    category: "fullstack",
+    demoUrl: "#",
+    githubUrl: "https://github.com/Ankit500ak",
+    details:
+      "Developing sustainable tech solutions for optimizing cargo transportation in large-scale industries by identifying the shortest paths to reduce environmental impact. The project uses advanced algorithms to calculate optimal routes while considering various environmental factors.",
+  },
+  {
+    id: 7,
+    title: "Task Master",
+    description: "AI-powered platform for generating project roadmaps and guiding structured coding.",
+    image: "/placeholder.svg?height=300&width=500",
+    tags: ["Flask", "Gemini API", "AI", "Project Management"],
+    category: "fullstack",
+    demoUrl: "#",
+    githubUrl: "https://github.com/Ankit500ak",
+    details:
+      "Developed Task Master, an AI-powered platform using Flask and the Gemini API to generate project roadmaps, guide structured coding, and merge code seamlessly. Enhances collaboration and accelerates software development by providing intelligent assistance throughout the development lifecycle.",
+  },
+  {
+    id: 8,
+    title: "SheetlaMandir.in",
+    description: "User-friendly website offering temple details, event updates, and visitor information.",
+    image: "/placeholder.svg?height=300&width=500",
+    tags: ["HTML", "CSS", "JavaScript", "Web Design"],
+    category: "frontend",
+    demoUrl: "https://sheetlamandir.in",
+    githubUrl: "https://github.com/Ankit500ak",
+    details:
+      "Developed SheetlaMandir.in, a user-friendly website offering temple details, event updates, and visitor information to enhance accessibility for devotees. The site is currently hosted with the domain name sheetlamandir.in and provides a comprehensive digital presence for the temple.",
+  },
+]
