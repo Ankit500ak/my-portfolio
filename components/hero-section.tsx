@@ -340,7 +340,7 @@ export default function HeroSection() {
                   className={`rounded-full px-8 border-purple-500 ${isDark ? 'text-purple-400 hover:bg-purple-500/10' : 'text-purple-600 hover:bg-purple-500/10'} shadow-lg shadow-purple-500/10 w-full sm:w-auto justify-center`}
                   asChild
                 >
-                  <a href="/resume.pdf" download>
+                  <a href="/ankitresume.pdf-1.pdf" download="Ankit_Resume.pdf">
                     Download CV
                     <DownloadIcon className="ml-2 h-4 w-4" aria-hidden="true" />
                   </a>
