@@ -1,11 +1,10 @@
 "use client"
 
-import { useRef, useEffect } from "react"
+import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import AnimatedText from "@/components/animated-text"
-import anime from "animejs/lib/anime.es.js"
 
 const technicalData = {
   skills: [
@@ -46,36 +45,6 @@ export default function TechnicalSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.1 })
 
-  useEffect(() => {
-    if (isInView) {
-      anime({
-        targets: '.skill-card',
-        translateY: [50, 0],
-        opacity: [0, 1],
-        duration: 800,
-        easing: 'easeOutElastic(1, 0.8)',
-        delay: anime.stagger(100)
-      })
-
-      anime({
-        targets: '.expertise-bar',
-        width: [0, (el: HTMLElement) => el.dataset.level + '%'],
-        duration: 1200,
-        easing: 'easeOutQuart',
-        delay: anime.stagger(200)
-      })
-
-      anime({
-        targets: '.floating-element',
-        translateY: [0, -20, 0],
-        duration: 3000,
-        easing: 'easeInOutSine',
-        loop: true,
-        direction: 'alternate'
-      })
-    }
-  }, [isInView])
-
   return (
     <section id="technical" className="py-20 relative overflow-hidden" ref={ref}>
       {/* Background Elements */}
@@ -87,10 +56,34 @@ export default function TechnicalSection() {
 
       {/* Floating Tech Icons */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="floating-element absolute top-32 left-20 text-4xl opacity-20">⚡</div>
-        <div className="floating-element absolute top-40 right-32 text-3xl opacity-20" style={{ animationDelay: '1s' }}>🔮</div>
-        <div className="floating-element absolute bottom-32 left-32 text-3xl opacity-20" style={{ animationDelay: '2s' }}>💎</div>
-        <div className="floating-element absolute bottom-40 right-20 text-4xl opacity-20" style={{ animationDelay: '0.5s' }}>🌟</div>
+        <motion.div 
+          className="absolute top-32 left-20 text-4xl opacity-20"
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        >
+          ⚡
+        </motion.div>
+        <motion.div 
+          className="absolute top-40 right-32 text-3xl opacity-20"
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        >
+          🔮
+        </motion.div>
+        <motion.div 
+          className="absolute bottom-32 left-32 text-3xl opacity-20"
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        >
+          💎
+        </motion.div>
+        <motion.div 
+          className="absolute bottom-40 right-20 text-4xl opacity-20"
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        >
+          🌟
+        </motion.div>
       </div>
 
       {/* Header */}
@@ -121,10 +114,15 @@ export default function TechnicalSection() {
           {technicalData.skills.map((skill, index) => (
             <motion.div
               key={skill.category}
-              className="skill-card opacity-0"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              initial={{ opacity: 0, scale: 0.8, y: 50 }}
+              animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.8, y: 50 }}
+              transition={{ 
+                duration: 0.8, 
+                delay: index * 0.1,
+                type: "spring",
+                stiffness: 100,
+                damping: 15
+              }}
             >
               <Card className="h-full group hover:scale-105 transition-all duration-500 overflow-hidden relative">
                 <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
@@ -134,9 +132,13 @@ export default function TechnicalSection() {
                 </div>
 
                 <CardContent className="p-6 relative z-10">
-                  <div className="text-4xl mb-4 text-center group-hover:scale-110 transition-transform duration-300">
+                  <motion.div 
+                    className="text-4xl mb-4 text-center group-hover:scale-110 transition-transform duration-300"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
                     {skill.icon}
-                  </div>
+                  </motion.div>
                   
                   <h3 className="text-xl font-bold text-center mb-4 group-hover:text-primary transition-colors duration-300">
                     {skill.category}
@@ -144,13 +146,16 @@ export default function TechnicalSection() {
                   
                   <div className="flex flex-wrap gap-2 justify-center">
                     {skill.items.map((item, itemIndex) => (
-                      <Badge 
-                        key={item} 
-                        className="bg-muted/50 hover:bg-primary/20 text-foreground transition-all duration-300 hover:scale-105"
-                        style={{ animationDelay: `${itemIndex * 50}ms` }}
+                      <motion.div
+                        key={item}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.3, delay: 0.3 + index * 0.1 + itemIndex * 0.05 }}
                       >
-                        {item}
-                      </Badge>
+                        <Badge className="bg-muted/50 hover:bg-primary/20 text-foreground transition-all duration-300 hover:scale-105">
+                          {item}
+                        </Badge>
+                      </motion.div>
                     ))}
                   </div>
                 </CardContent>
@@ -191,13 +196,14 @@ export default function TechnicalSection() {
               </div>
               
               <div className="relative h-3 bg-muted rounded-full overflow-hidden">
-                <div 
-                  className={`expertise-bar h-full bg-gradient-to-r ${item.color} rounded-full relative`}
-                  data-level={item.level}
-                  style={{ width: '0%' }}
+                <motion.div 
+                  className={`h-full bg-gradient-to-r ${item.color} rounded-full relative`}
+                  initial={{ width: 0 }}
+                  animate={isInView ? { width: `${item.level}%` } : { width: 0 }}
+                  transition={{ duration: 1.2, delay: 0.7 + index * 0.2, ease: "easeOut" }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent animate-pulse"></div>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           ))}
@@ -227,12 +233,22 @@ export default function TechnicalSection() {
               key={tech}
               initial={{ opacity: 0, scale: 0 }}
               animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 + index * 0.05 }}
+              transition={{ 
+                duration: 0.5, 
+                delay: 0.8 + index * 0.05,
+                type: "spring",
+                stiffness: 200,
+                damping: 20
+              }}
               whileHover={{ scale: 1.1, rotate: 5 }}
               className="group"
             >
               <Card className="p-4 text-center hover:shadow-lg transition-all duration-300 cursor-pointer bg-gradient-to-br from-muted/50 to-muted hover:from-primary/10 hover:to-secondary/10">
-                <div className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">
+                <motion.div 
+                  className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.6 }}
+                >
                   {tech === "React" && "⚛️"}
                   {tech === "Next.js" && "▲"}
                   {tech === "TypeScript" && "📘"}
@@ -245,7 +261,7 @@ export default function TechnicalSection() {
                   {tech === "MongoDB" && "🍃"}
                   {tech === "Docker" && "🐳"}
                   {tech === "AWS" && "☁️"}
-                </div>
+                </motion.div>
                 <span className="text-sm font-medium group-hover:text-primary transition-colors">
                   {tech}
                 </span>
@@ -261,8 +277,10 @@ export default function TechnicalSection() {
         animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
         transition={{ duration: 0.5, delay: 1.2 }}
         className="fixed bottom-8 right-8 z-50"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
       >
-        <div className="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white text-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 cursor-pointer">
+        <div className="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white text-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer">
           ⚡
         </div>
       </motion.div>
