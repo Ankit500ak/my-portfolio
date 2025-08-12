@@ -21,6 +21,18 @@ const technicalData = {
       icon: "🔧"
     },
     {
+      category: "Full Stack",
+      items: ["MERN Stack", "Next.js Full Stack", "API Design", "Database Design", "Authentication", "Deployment"],
+      color: "from-indigo-500 to-blue-500",
+      icon: "🌐"
+    },
+    {
+      category: "Python Developer",
+      items: ["Python", "Django", "Flask", "FastAPI", "Pandas", "NumPy", "Scikit-learn"],
+      color: "from-yellow-500 to-orange-500",
+      icon: "🐍"
+    },
+    {
       category: "AI & Data",
       items: ["Machine Learning", "AI Integration", "NLP", "Gemini API", "TensorFlow"],
       color: "from-purple-500 to-pink-500",
@@ -110,7 +122,7 @@ export default function TechnicalSection() {
 
       {/* Skills Grid */}
       <div className="mb-24 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
           {technicalData.skills.map((skill, index) => (
             <motion.div
               key={skill.category}
@@ -227,7 +239,8 @@ export default function TechnicalSection() {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
           {[
             "React", "Next.js", "TypeScript", "Python", "Node.js", "Django",
-            "Flask", "GraphQL", "PostgreSQL", "MongoDB", "Docker", "AWS"
+            "Flask", "FastAPI", "GraphQL", "PostgreSQL", "MongoDB", "Docker",
+            "AWS", "Pandas", "NumPy", "Scikit-learn", "Express", "Vercel"
           ].map((tech, index) => (
             <motion.div
               key={tech}
@@ -256,11 +269,17 @@ export default function TechnicalSection() {
                   {tech === "Node.js" && "🟢"}
                   {tech === "Django" && "🎯"}
                   {tech === "Flask" && "🍶"}
+                  {tech === "FastAPI" && "⚡"}
                   {tech === "GraphQL" && "🔷"}
                   {tech === "PostgreSQL" && "🐘"}
                   {tech === "MongoDB" && "🍃"}
                   {tech === "Docker" && "🐳"}
                   {tech === "AWS" && "☁️"}
+                  {tech === "Pandas" && "🐼"}
+                  {tech === "NumPy" && "🔢"}
+                  {tech === "Scikit-learn" && "🧠"}
+                  {tech === "Express" && "🚂"}
+                  {tech === "Vercel" && "▲"}
                 </motion.div>
                 <span className="text-sm font-medium group-hover:text-primary transition-colors">
                   {tech}

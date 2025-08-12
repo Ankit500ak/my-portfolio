@@ -119,11 +119,11 @@ function Model({ hovered, clicked, isDark, onModelClick, activeSpot, externalSca
     if (scene && modelRef.current) {
       // Different scaling and positioning for background vs foreground
       if (isBackground) {
-        scene.scale.set(0.8, 0.8, 0.8)
+        scene.scale.set(0.5, 0.5, 0.5)
         scene.position.set(0, -0.2, 0)
         scene.rotation.y = Math.PI / 4
       } else {
-        scene.scale.set(1.2, 1.2, 1.2)
+        scene.scale.set(0.8, 0.8, 0.8)
         scene.position.set(0, -0.1, 0)
         scene.rotation.y = Math.PI / 6
       }
@@ -153,10 +153,10 @@ function Model({ hovered, clicked, isDark, onModelClick, activeSpot, externalSca
     
     if (isBackground) {
       // Background model should be larger and more prominent
-      desiredDiameter = shorterSide * 2.2
+      desiredDiameter = shorterSide * 1.5
     } else {
       // Foreground model uses standard scaling
-      desiredDiameter = shorterSide * 1.3
+      desiredDiameter = shorterSide * 0.9
     }
     
     const fitScale = desiredDiameter / (2 * radius)
@@ -184,15 +184,15 @@ export default function HeroCanvas({ isDark }: { isDark: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [modelScale, setModelScale] = useState(() => {
     if (typeof window !== 'undefined') {
-      return window.innerWidth < 768 ? 5.5 : 6.0
+      return window.innerWidth < 768 ? 3.5 : 4.0
     }
-    return 6.0
+    return 4.0
   })
   const [backgroundScale, setBackgroundScale] = useState(() => {
     if (typeof window !== 'undefined') {
-      return window.innerWidth < 768 ? 5.5 : 1.0
+      return window.innerWidth < 768 ? 3.5 : 0.7
     }
-    return 1.0
+    return 0.7
   })
   const pinchStateRef = useRef<{ startDistance: number | null; baseScale: number }>({ startDistance: null, baseScale: 1 })
   const [containerSize, setContainerSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 })
@@ -269,13 +269,13 @@ export default function HeroCanvas({ isDark }: { isDark: boolean }) {
     
     if (isMobile) {
       // Zoom the background model on mobile
-      const minScale = 3.0
-      const maxScale = 8.0
+      const minScale = 2.0
+      const maxScale = 6.0
       setBackgroundScale((prev) => clamp(prev * (zoomOut ? 0.95 : 1.05), minScale, maxScale))
     } else {
       // Zoom the foreground model on desktop
-      const minScale = 0.8
-      const maxScale = 5.0
+      const minScale = 0.5
+      const maxScale = 3.0
       setModelScale((prev) => clamp(prev * (zoomOut ? 0.95 : 1.05), minScale, maxScale))
     }
   }
@@ -311,13 +311,13 @@ export default function HeroCanvas({ isDark }: { isDark: boolean }) {
         
         if (isMobile) {
           // Zoom background model on mobile
-          const minScale = 3.0
-          const maxScale = 8.0
+          const minScale = 2.0
+          const maxScale = 6.0
           setBackgroundScale(clamp(pinchStateRef.current.baseScale * factor, minScale, maxScale))
         } else {
           // Zoom foreground model on desktop
-          const minScale = 0.8
-          const maxScale = 4.0
+          const minScale = 0.5
+          const maxScale = 3.0
           setModelScale(clamp(pinchStateRef.current.baseScale * factor, minScale, maxScale))
         }
       }
