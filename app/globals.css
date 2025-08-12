@@ -184,7 +184,6 @@
 
   body {
     @apply bg-background text-foreground;
-    cursor: none;
   }
 
   /* Hide default cursor when custom cursor is active */
@@ -194,7 +193,6 @@
   input,
   select,
   textarea {
-    cursor: none;
   }
 
   /* Custom scrollbar */

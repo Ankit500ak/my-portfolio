@@ -881,7 +881,4 @@
     0 0 15px rgba(139, 92, 246, 0.5);
 }
 
-/* Hide default cursor */
-body {
-  cursor: none;
-}
+/* Use default system cursor */

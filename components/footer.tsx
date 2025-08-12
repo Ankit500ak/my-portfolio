@@ -39,9 +39,9 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#skills" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                    Skills
-                  </Link>
+                          <Link href="#technical" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+          Technical
+        </Link>
                 </li>
                 <li>
                   <Link href="#projects" className="text-sm text-muted-foreground hover:text-primary transition-colors">

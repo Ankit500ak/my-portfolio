@@ -1,188 +1,14 @@
 "use client"
 
-import { useRef, useEffect, useState, Suspense } from "react"
+import { useRef, useEffect, useState } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Canvas } from "@react-three/fiber"
-import {
-  Environment,
-  ContactShadows,
-  OrbitControls,
-  Html,
-  useProgress,
-  Preload,
-  useGLTF,
-} from "@react-three/drei"
-import { DownloadIcon, ArrowDownIcon, Linkedin, Github, ExternalLink, MousePointer, Fingerprint } from "lucide-react"
-import * as THREE from "three"
+import dynamic from "next/dynamic"
+import { DownloadIcon, ArrowDownIcon, Linkedin, Github, ExternalLink } from "lucide-react"
 
-// Define proper types
-interface ModelProps {
-  hovered: boolean;
-  clicked: boolean;
-  isDark: boolean;
-  onModelClick: () => void;
-  activeSpot: number;
-}
+const HeroCanvas = dynamic(() => import("./hero-canvas"), { ssr: false })
 
-// Spotlight positions and colors configuration
-const SPOTLIGHT_POSITIONS: [number, number, number][] = [
-  [10, 10, 10],
-  [-10, 10, 5],
-  [0, 10, -10],
-  [10, -5, 5],
-]
-
-// Theme-based spotlight colors
-const getSpotlightColors = (isDark: boolean) => {
-  const baseColors = [
-    "#a855f7", // Purple
-    "#8b5cf6", // Violet
-    "#d946ef", // Fuchsia
-    "#c026d3", // Pink
-  ]
-  
-  return isDark
-    ? baseColors
-    : baseColors.map(color => color.replace('#', 'rgba(') + ', 0.8)')
-}
-
-// Loader component for 3D model
-function Loader() {
-  const { progress } = useProgress()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  return (
-    <Html center>
-      {mounted && (
-        <div className="flex flex-col items-center justify-center">
-          <div
-            className="w-12 h-12 border-4 border-t-purple-500 border-r-transparent border-b-purple-500 border-l-transparent rounded-full animate-spin mb-2"
-            aria-hidden="true"
-          />
-          <p className="text-sm font-medium text-purple-500" role="status">
-            {progress.toFixed(0)}% loaded
-          </p>
-        </div>
-      )}
-    </Html>
-  )
-}
-
-// Fallback object with better visual appeal and theme compatibility
-function FallbackObject({ hovered, clicked, isDark, onModelClick, activeSpot }: ModelProps) {
-  const baseColor = isDark ? "#6D28D9" : "#7C3AED" 
-  const hoverColor = isDark ? "#8B5CF6" : "#A78BFA"
-  
-  return (
-    <mesh 
-      onClick={(e) => {
-        e.stopPropagation()
-        onModelClick()
-      }}
-    >
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial
-        color={hovered && !clicked ? hoverColor : baseColor}
-        roughness={0.4}
-        metalness={0.9}
-        envMapIntensity={isDark ? 2.0 : 1.5}
-      />
-    </mesh>
-  )
-}
-
-// Model component with theme integration
-function Model({ hovered, clicked, isDark, onModelClick, activeSpot }: ModelProps) {
-  const [modelLoaded, setModelLoaded] = useState(false)
-  const [retryCount, setRetryCount] = useState(0)
-  const [loadModelError, setLoadModelError] = useState<string | null>(null)
-  const MAX_RETRIES = 3
-  const modelRef = useRef<THREE.Group>(null)
-  const [loading, setLoading] = useState(true)
-  const [hasAttemptedLoad, setHasAttemptedLoad] = useState(false)
-  
-  // Enhanced error handling for model loading
-  const onError = (error: unknown) => {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-    console.error("Error loading 3D model:", {
-      errorObject: error,
-      errorType: typeof error,
-      errorMessage,
-      errorStack: error instanceof Error ? error.stack : 'Network error or file not found'
-    })
-
-    setLoadModelError(errorMessage)
-    if (retryCount < MAX_RETRIES) {
-      setRetryCount(prev => prev + 1)
-      setModelLoaded(false)
-    } else {
-      console.warn(`Failed to load model after ${MAX_RETRIES} retries. Using fallback.`)
-    }
-  }
-
-  // Debugging: Log the model path and check if files exist
-  console.log('Attempting to load model from:', '/models/scene.gltf')
-  console.log('Files in models directory:', {
-    gltf: window.location.origin + '/models/scene.gltf',
-    bin: window.location.origin + '/models/scene.bin'
-  })
-
-  useEffect(() => {
-    if (!hasAttemptedLoad) {
-      const timeout = setTimeout(() => {
-        if (!modelLoaded) {
-          console.warn('Model loading timed out after 10 seconds')
-          setLoadModelError('Model loading timed out')
-          setLoading(false)
-        }
-      }, 10000)
-
-      return () => clearTimeout(timeout)
-    }
-  }, [modelLoaded, hasAttemptedLoad])
-
-  const { scene } = useGLTF('/models/scene.gltf', true, undefined, onError)
-  
-  useEffect(() => {
-    if (scene && modelRef.current) {
-      console.log('Model loaded successfully', scene)
-      
-      // Scale down the model to fit the scene
-      scene.scale.set(0.5, 0.5, 0.5)
-      
-      // Center the model
-      scene.position.set(0, 0, 0)
-      
-      // Rotate the model for better viewing
-      scene.rotation.y = Math.PI / 4
-      
-      // Clear any existing content
-      modelRef.current.clear()
-      
-      // Add the model to the scene
-      modelRef.current.add(scene)
-      setModelLoaded(true)
-      setLoading(false)
-      setHasAttemptedLoad(true)
-    }
-  }, [scene])
-
-  if (loadModelError) {
-    console.error('Using fallback object due to model loading error:', loadModelError)
-    return <FallbackObject {...{ hovered, clicked, isDark, onModelClick, activeSpot }} />
-  }
-
-  return (
-    <group ref={modelRef} onClick={onModelClick}>
-      {loading && <Loader />}
-    </group>
-  )
-}
+// 3D Canvas is dynamically imported with SSR disabled to avoid server-side evaluation
 
 // Animated text component
 function AnimatedText({ text }: { text: string }) {
@@ -295,218 +121,9 @@ const getParticleStyle = (index: number) => {
 
 // Custom Canvas Section with improved mobile support
 function CanvasSection({ isDark }: { isDark: boolean }) {
-  const [hovered, setHovered] = useState(false)
-  const [clicked, setClicked] = useState(false)
-  const [activeSpot, setActiveSpot] = useState(0)
-  const [isTouchDevice, setIsTouchDevice] = useState(false)
-  const canvasRef = useRef<HTMLDivElement>(null)
-  
-  // Detect touch device and set appropriate interactions
-  useEffect(() => {
-    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0)
-  }, [])
-  
-  const handleModelClick = () => {
-    setClicked(!clicked)
-    // Cycle through spotlight positions when clicked
-    setActiveSpot((prev) => (prev + 1) % SPOTLIGHT_POSITIONS.length)
-  }
-  
-  // Set up touch interactions
-  useEffect(() => {
-    const element = canvasRef.current
-    if (!element || !isTouchDevice) return
-    
-    const handleTouchStart = () => setHovered(true)
-    const handleTouchEnd = () => setHovered(false)
-    
-    element.addEventListener('touchstart', handleTouchStart, { passive: true })
-    element.addEventListener('touchend', handleTouchEnd, { passive: true })
-    
-    return () => {
-      element.removeEventListener('touchstart', handleTouchStart)
-      element.removeEventListener('touchend', handleTouchEnd)
-    }
-  }, [isTouchDevice])
-  
-  // Set up mouse interactions
-  useEffect(() => {
-    const element = canvasRef.current
-    if (!element || isTouchDevice) return
-    
-    const handleMouseEnter = () => setHovered(true)
-    const handleMouseLeave = () => setHovered(false)
-    
-    element.addEventListener('mouseenter', handleMouseEnter)
-    element.addEventListener('mouseleave', handleMouseLeave)
-    
-    return () => {
-      element.removeEventListener('mouseenter', handleMouseEnter)
-      element.removeEventListener('mouseleave', handleMouseLeave)
-    }
-  }, [isTouchDevice])
-  
-  // Get theme-specific spotlight colors
-  const spotlightColors = getSpotlightColors(isDark)
-
-  return (
-    <div 
-      ref={canvasRef}
-      className="h-[400px] w-full max-w-[500px] rounded-2xl bg-gradient-to-br from-purple-900/40 via-black/50 to-pink-900/40 border border-purple-500/20 backdrop-blur-sm transition-all duration-500 shadow-xl relative group cursor-pointer"
-    >
-      <Canvas
-        camera={{ position: [0, 0, 8], fov: 45 }}
-        dpr={[1, 2]}
-        shadows
-        gl={{
-          antialias: true,
-          alpha: true,
-          toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: isDark ? 1.5 : 1.2,
-        }}
-      >
-        <Suspense fallback={<Loader />}>
-          <Model 
-            hovered={hovered} 
-            clicked={clicked} 
-            isDark={isDark}
-            onModelClick={handleModelClick}
-            activeSpot={activeSpot}
-          />
-
-          {/* Enhanced lighting setup with theme awareness */}
-          <spotLight
-            position={SPOTLIGHT_POSITIONS[activeSpot]}
-            angle={0.15}
-            penumbra={1}
-            intensity={clicked ? (isDark ? 2 : 1.5) : (isDark ? 1 : 0.8)}
-            castShadow
-            color={clicked ? spotlightColors[activeSpot] : (isDark ? "#a855f7" : "#9333ea")}
-          />
-          <pointLight 
-            position={[-10, -10, -10]} 
-            intensity={isDark ? 0.5 : 0.3} 
-            color={isDark ? "#d946ef" : "#c026d3"} 
-          />
-
-          {/* Improved ambient environment */}
-          <Environment preset={isDark ? "night" : "sunset"} />
-          <ContactShadows
-            rotation={[-Math.PI / 2, 0, 0]}
-            position={[0, -1, 0]}
-            opacity={isDark ? 0.3 : 0.2}
-            width={10}
-            height={10}
-            blur={2}
-            far={10}
-            color={clicked ? spotlightColors[activeSpot] : "#000000"}
-          />
-
-          {/* Enhanced orbit controls optimized for touch */}
-          <OrbitControls
-            enableZoom={clicked}
-            enablePan={clicked}
-            enableRotate={clicked}
-            autoRotate={!isTouchDevice && clicked}
-            autoRotateSpeed={clicked ? 4 : 2}
-            minPolarAngle={Math.PI / 4}
-            maxPolarAngle={(Math.PI * 3) / 4}
-            minDistance={4}
-            maxDistance={10}
-            // Touch settings for mobile
-            enableDamping={true}
-            dampingFactor={0.1}
-            rotateSpeed={isTouchDevice ? 0.7 : 1}
-            zoomSpeed={isTouchDevice ? 0.7 : 1}
-          />
-
-          <Preload all />
-        </Suspense>
-      </Canvas>
-
-      {/* Interactive tooltips with improved accessibility */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/80 dark:bg-black/80 px-4 py-2 rounded-full text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        {clicked ? (
-          <span>{isTouchDevice ? "Use fingers to rotate and pinch to zoom" : "Use mouse to rotate and zoom"}. Tap to exit.</span>
-        ) : (
-          <span>{isTouchDevice ? "Tap" : "Click"} to enter interactive mode</span>
-        )}
-      </div>
-
-      {/* Interaction hint */}
-      {hovered && !clicked && (
-        <div className="absolute top-4 right-4 text-xs bg-black/80 dark:bg-black/80 px-3 py-1 rounded-full text-white animate-pulse flex items-center gap-1">
-          {isTouchDevice ? (
-            <>
-              <Fingerprint className="h-3 w-3" />
-              <span>Try tapping!</span>
-            </>
-          ) : (
-            <>
-              <MousePointer className="h-3 w-3" />
-              <span>Try clicking!</span>
-            </>
-          )}
-        </div>
-      )}
-    </div>
-  )
+  return <HeroCanvas isDark={isDark} />
 }
 
-// Custom Cursor Effect Component
-function CustomCursor() {
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
-  const [isHovering, setIsHovering] = useState(false)
-  const [isClicking, setIsClicking] = useState(false)
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY })
-    }
-
-    const handleMouseEnter = () => {
-      setIsHovering(true)
-    }
-
-    const handleMouseLeave = () => {
-      setIsHovering(false)
-    }
-
-    const handleMouseDown = () => {
-      setIsClicking(true)
-    }
-
-    const handleMouseUp = () => {
-      setIsClicking(false)
-    }
-
-    document.addEventListener('mousemove', handleMouseMove)
-    document.addEventListener('mouseenter', handleMouseEnter)
-    document.addEventListener('mouseleave', handleMouseLeave)
-    document.addEventListener('mousedown', handleMouseDown)
-    document.addEventListener('mouseup', handleMouseUp)
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseenter', handleMouseEnter)
-      document.removeEventListener('mouseleave', handleMouseLeave)
-      document.removeEventListener('mousedown', handleMouseDown)
-      document.removeEventListener('mouseup', handleMouseUp)
-    }
-  }, [])
-
-  return (
-    <div className="cursor-wrapper">
-      <div
-        className={`cursor-dot ${isHovering ? 'hovering' : ''} ${isClicking ? 'clicking' : ''}`}
-        style={{
-          left: `${cursorPosition.x}px`,
-          top: `${cursorPosition.y}px`
-        }}
-      />
-    </div>
-  )
-}
 
 // Add custom CSS for grid patterns
 const gridPatternStyles = `
@@ -623,18 +240,21 @@ export default function HeroSection() {
         const { clientX, clientY } = e
         const { width, height, left, top } = parallaxRef.current!.getBoundingClientRect()
 
-        // Calculate relative position
-        const x = (clientX - left - width / 2) / 25
-        const y = (clientY - top - height / 2) / 25
+        // Calculate relative position with reduced intensity for laptop
+        const isLaptop = window.innerWidth >= 1024 && window.innerWidth < 1440
+        const intensity = isLaptop ? 0.3 : 0.6 // Reduce intensity for laptop
+        const x = (clientX - left - width / 2) / (25 / intensity)
+        const y = (clientY - top - height / 2) / (25 / intensity)
 
         const layers = parallaxRef.current!.querySelectorAll(".parallax-layer")
 
         layers.forEach((layer, index) => {
           const depth = index + 1
-          const translateX = x * depth
-          const translateY = y * depth
+          const translateX = x * depth * intensity
+          const translateY = y * depth * intensity
+          const rotation = isLaptop ? x / 20 : x / 10 // Reduced rotation for laptop
 
-          layer.setAttribute("style", `transform: translate(${translateX}px, ${translateY}px) scale(1.05) rotate(${x/10}deg)`)
+          layer.setAttribute("style", `transform: translate(${translateX}px, ${translateY}px) scale(1.02) rotate(${rotation}deg)`)
         })
       }, 10)
     }
@@ -650,35 +270,41 @@ export default function HeroSection() {
 
   return (
     <div className="relative">
-      <CustomCursor />
       <style dangerouslySetInnerHTML={{ __html: gridPatternStyles }} />
       
       <section
         ref={targetRef}
-        className={`min-h-[90vh] flex items-center py-20 md:py-32 overflow-hidden relative 
+        className={`min-h-[95vh] flex items-center md:items-start pt-8 md:pt-0 pb-20 md:pb-32 overflow-hidden relative 
                   ${isDark ? 'bg-gradient-to-b from-gray-900 to-black' : 'bg-gradient-to-b from-gray-100 to-white'}`}
       >
-        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        {/* Background 3D model on mobile only */}
+        <div className="absolute inset-0 z-0 md:hidden">
+          {isMounted && <CanvasSection isDark={isDark} />}
+        </div>
+        {/* Contrast overlay for mobile readability */}
+        <div className="absolute inset-0 md:hidden z-0 bg-black/30" />
+        {/* Subtle grid overlay */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-10 z-0"></div>
         
         <motion.div
           style={{ y, opacity }}
-          className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+          className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16 w-full px-4 sm:px-6 lg:px-8"
           ref={parallaxRef}
         >
-          <div className="flex flex-col justify-center parallax">
+          <div className="flex flex-col justify-center parallax z-10 text-center md:text-left px-4 sm:px-6 md:pl-6 md:pr-0 lg:pl-8 md:-mt-10 lg:-mt-24 xl:-mt-32">
             <div className="parallax-layer">
               <motion.div 
                 initial={{ opacity: 0, y: 20 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ duration: 0.5 }}
               >
-                <h2 className={`text-xl font-medium ${isDark ? 'text-purple-400' : 'text-purple-600'} mb-2`}>
+                <h2 className={`text-xl font-medium ${isDark ? 'text-purple-400' : 'text-purple-600'} mb-2 md:mt-8 lg:mt-12`}>
                   Hello, I'm
                 </h2>
-                <h1 className={`text-5xl md:text-7xl font-bold tracking-tighter mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <h1 className={`text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   <AnimatedText text="Ankit Pal" />
                 </h1>
-                <h2 className={`text-2xl md:text-3xl font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-6`}>
+                <h2 className={`text-xl md:text-3xl font-medium leading-snug ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-6`}>
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">
                     Python Developer
                   </span>{" "}
@@ -687,18 +313,18 @@ export default function HeroSection() {
                     Web Developer
                   </span>
                 </h2>
-                <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-8 max-w-md`}>
+                <p className={`text-base md:text-lg ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-8 max-w-md mx-auto md:mx-0`}>
                   A skilled web developer with experience leading the AIII community and organizing technical events.
                   Proficient in building innovative web applications and sustainable tech solutions.
                 </p>
               </motion.div>
             </div>
 
-            <div className="flex flex-wrap gap-4 parallax-layer">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 parallax-layer">
               <MagneticButton>
                 <Button
                   size="lg"
-                  className="rounded-full px-8 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white shadow-lg shadow-purple-500/20"
+                  className="rounded-full px-8 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white shadow-lg shadow-purple-500/20 w-full sm:w-auto justify-center"
                   asChild
                 >
                   <a href="#projects">
@@ -711,7 +337,7 @@ export default function HeroSection() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className={`rounded-full px-8 border-purple-500 ${isDark ? 'text-purple-400 hover:bg-purple-500/10' : 'text-purple-600 hover:bg-purple-500/10'} shadow-lg shadow-purple-500/10`}
+                  className={`rounded-full px-8 border-purple-500 ${isDark ? 'text-purple-400 hover:bg-purple-500/10' : 'text-purple-600 hover:bg-purple-500/10'} shadow-lg shadow-purple-500/10 w-full sm:w-auto justify-center`}
                   asChild
                 >
                   <a href="/resume.pdf" download>
@@ -722,7 +348,7 @@ export default function HeroSection() {
               </MagneticButton>
             </div>
 
-            <div className="flex gap-4 mt-6 parallax-layer">
+            <div className="flex gap-4 mt-6 parallax-layer justify-center md:justify-start">
               <MagneticButton>
                 <Button
                   variant="outline"
@@ -772,14 +398,18 @@ export default function HeroSection() {
             </div>
           </div>
 
+          {/* Right column 3D model on md+ */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            className="parallax-layer relative"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex items-center justify-center parallax-layer"
           >
-            {/* Only render Canvas if component is mounted (prevents SSR issues) */}
-            {isMounted && <CanvasSection isDark={isDark} />}
+            <div className="hidden md:flex items-center justify-end">
+              <div className="w-full md:translate-x-4 lg:translate-x-8">
+                {isMounted && <CanvasSection isDark={isDark} />}
+              </div>
+            </div>
           </motion.div>
         </motion.div>
 

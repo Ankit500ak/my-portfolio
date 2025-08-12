@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 
 interface Particle {
@@ -15,8 +15,15 @@ interface Particle {
 export default function ParticleBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { theme } = useTheme()
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isClient) return
+
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -118,7 +125,12 @@ export default function ParticleBackground() {
       window.removeEventListener("resize", resizeCanvas)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [theme])
+  }, [theme, isClient])
+
+  // Don't render anything until client-side
+  if (!isClient) {
+    return null
+  }
 
   return (
     <canvas

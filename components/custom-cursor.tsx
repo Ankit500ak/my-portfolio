@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [cursorVariant, setCursorVariant] = useState("default")
+  const [clickRipples, setClickRipples] = useState<number[]>([])
 
   useEffect(() => {
     const mouseMove = (e: MouseEvent) => {
@@ -15,7 +16,10 @@ export default function CustomCursor() {
       })
     }
 
-    const handleMouseDown = () => setCursorVariant("click")
+    const handleMouseDown = () => {
+      setCursorVariant("click")
+      setClickRipples((prev) => [...prev, Date.now()])
+    }
     const handleMouseUp = () => setCursorVariant("default")
 
     const handleMouseEnter = (e: MouseEvent) => {
@@ -64,6 +68,7 @@ export default function CustomCursor() {
       width: 32,
       backgroundColor: "rgba(var(--primary-rgb), 0.2)",
       border: "1px solid rgba(var(--primary-rgb), 0.5)",
+      boxShadow: "0 0 20px rgba(var(--primary-rgb), 0.25)",
       transition: {
         type: "spring",
         mass: 0.3,
@@ -79,6 +84,7 @@ export default function CustomCursor() {
       backgroundColor: "rgba(var(--primary-rgb), 0.3)",
       border: "1px solid rgba(var(--primary-rgb), 0.8)",
       mixBlendMode: "difference",
+      boxShadow: "0 0 30px rgba(var(--primary-rgb), 0.35)",
       transition: {
         type: "spring",
         mass: 0.3,
@@ -93,6 +99,7 @@ export default function CustomCursor() {
       width: 24,
       backgroundColor: "rgba(var(--primary-rgb), 0.5)",
       border: "1px solid rgba(var(--primary-rgb), 1)",
+      boxShadow: "0 0 25px rgba(var(--primary-rgb), 0.5)",
       transition: {
         type: "spring",
         mass: 0.3,
@@ -112,10 +119,55 @@ export default function CustomCursor() {
   if (isTouchDevice) return null
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 z-50 rounded-full pointer-events-none backdrop-blur-sm mix-blend-difference"
-      variants={variants}
-      animate={cursorVariant}
-    />
+    <>
+      {/* Core cursor */}
+      <motion.div
+        className="fixed top-0 left-0 z-[9999] rounded-full pointer-events-none backdrop-blur-sm mix-blend-difference"
+        variants={variants}
+        animate={cursorVariant}
+      />
+
+      {/* Trailing ring */}
+      <motion.div
+        className="fixed top-0 left-0 z-[9998] rounded-full pointer-events-none border border-primary/40"
+        style={{
+          x: mousePosition.x - 32,
+          y: mousePosition.y - 32,
+          width: 64,
+          height: 64,
+        }}
+        animate={{
+          x: mousePosition.x - 32,
+          y: mousePosition.y - 32,
+        }}
+        transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.4 }}
+      />
+
+      {/* Click ripples */}
+      {clickRipples.map((id) => (
+        <motion.span
+          key={id}
+          className="fixed top-0 left-0 z-[9997] pointer-events-none rounded-full border border-primary/50"
+          initial={{
+            x: mousePosition.x - 10,
+            y: mousePosition.y - 10,
+            width: 20,
+            height: 20,
+            opacity: 0.6,
+          }}
+          animate={{
+            x: mousePosition.x - 40,
+            y: mousePosition.y - 40,
+            width: 80,
+            height: 80,
+            opacity: 0,
+          }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          onAnimationComplete={() =>
+            setClickRipples((prev) => prev.filter((t) => t !== id))
+          }
+        />
+      ))}
+    </>
   )
 }

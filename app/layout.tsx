@@ -5,7 +5,6 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-import CustomCursor from "@/components/custom-cursor"
 import ParticleBackground from "@/components/particle-background"
 
 const spaceGrotesk = Space_Grotesk({
@@ -33,7 +32,6 @@ export default function RootLayout({
           enableSystem={false}
           themes={["light", "dark", "golden", "black", "neon", "cyberpunk"]}
         >
-          <CustomCursor />
           <div className="relative flex min-h-screen flex-col overflow-hidden bg-gradient-to-b from-background to-background/80">
             <ParticleBackground />
             <Header />
