@@ -1,121 +1,44 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import { motion, useInView } from "framer-motion"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { 
-  Code2, 
-  Cpu, 
-  Database, 
-  GitBranch, 
-  Globe, 
-  Shield, 
-  Zap,
-  Layers,
-  Workflow,
-  Monitor
-} from "lucide-react"
 import AnimatedText from "@/components/animated-text"
+import anime from "animejs/lib/anime.es.js"
 
 const technicalData = {
   skills: [
     {
-      category: "Frontend Development",
-      items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Three.js", "WebGL"],
-      icon: <Globe className="w-5 h-5" />
+      category: "Frontend",
+      items: ["React", "Next.js", "TypeScript", "Tailwind", "Framer Motion", "Three.js"],
+      color: "from-blue-500 to-cyan-500",
+      icon: "⚛️"
     },
     {
-      category: "Backend Development",
-      items: ["Node.js", "Python", "Django", "Flask", "Express.js", "REST APIs", "GraphQL"],
-      icon: <Database className="w-5 h-5" />
+      category: "Backend",
+      items: ["Node.js", "Python", "Django", "Flask", "Express", "GraphQL"],
+      color: "from-green-500 to-emerald-500",
+      icon: "🔧"
     },
     {
-      category: "Data & AI",
-      items: ["Machine Learning", "Data Analysis", "AI Integration", "NLP", "Gemini API", "TensorFlow", "Pandas"],
-      icon: <Cpu className="w-5 h-5" />
+      category: "AI & Data",
+      items: ["Machine Learning", "AI Integration", "NLP", "Gemini API", "TensorFlow"],
+      color: "from-purple-500 to-pink-500",
+      icon: "🤖"
     },
     {
-      category: "DevOps & Tools",
-      items: ["Git", "GitHub", "Docker", "CI/CD", "AWS", "Vercel", "PostgreSQL", "MongoDB"],
-      icon: <GitBranch className="w-5 h-5" />
+      category: "DevOps",
+      items: ["Git", "Docker", "CI/CD", "AWS", "Vercel", "PostgreSQL"],
+      color: "from-orange-500 to-red-500",
+      icon: "🚀"
     }
   ],
-  architecture: [
-    {
-      title: "Microservices Architecture",
-      description: "Designing scalable, maintainable systems with service-oriented architecture",
-      patterns: ["API Gateway", "Service Discovery", "Load Balancing", "Circuit Breaker"]
-    },
-    {
-      title: "Modern Frontend Patterns",
-      description: "Implementing cutting-edge UI/UX patterns and state management",
-      patterns: ["Component Composition", "Custom Hooks", "Context API", "State Machines"]
-    },
-    {
-      title: "Data Architecture",
-      description: "Building robust data pipelines and storage solutions",
-      patterns: ["Event Sourcing", "CQRS", "Data Lakes", "Real-time Processing"]
-    }
-  ],
-  methodologies: [
-    {
-      title: "Agile Development",
-      description: "Iterative development with continuous feedback and adaptation",
-      practices: ["Scrum", "Kanban", "Sprint Planning", "Retrospectives"]
-    },
-    {
-      title: "Test-Driven Development",
-      description: "Writing tests before code to ensure quality and maintainability",
-      practices: ["Unit Testing", "Integration Testing", "E2E Testing", "Code Coverage"]
-    },
-    {
-      title: "Continuous Integration",
-      description: "Automated testing and deployment pipelines",
-      practices: ["Automated Testing", "Code Quality Gates", "Deployment Automation", "Monitoring"]
-    }
-  ],
-  tools: [
-    {
-      category: "Development",
-      tools: ["VS Code", "IntelliJ", "Postman", "Insomnia", "Chrome DevTools"]
-    },
-    {
-      category: "Design & Prototyping",
-      tools: ["Figma", "Adobe Creative Suite", "Blender", "Sketch", "InVision"]
-    },
-    {
-      category: "Analytics & Monitoring",
-      tools: ["Google Analytics", "Sentry", "LogRocket", "Hotjar", "Mixpanel"]
-    }
-  ],
-  performance: [
-    {
-      aspect: "Frontend Performance",
-      metrics: ["Core Web Vitals", "Bundle Optimization", "Lazy Loading", "Image Optimization"]
-    },
-    {
-      aspect: "Backend Performance",
-      metrics: ["Database Optimization", "Caching Strategies", "API Response Time", "Scalability"]
-    },
-    {
-      aspect: "User Experience",
-      metrics: ["Accessibility", "Mobile Responsiveness", "Progressive Enhancement", "Performance Budgets"]
-    }
-  ],
-  security: [
-    {
-      area: "Application Security",
-      practices: ["Input Validation", "Authentication", "Authorization", "Data Encryption"]
-    },
-    {
-      area: "Infrastructure Security",
-      practices: ["HTTPS", "CORS", "Rate Limiting", "Security Headers"]
-    },
-    {
-      area: "Data Protection",
-      practices: ["GDPR Compliance", "Data Anonymization", "Secure Storage", "Audit Logging"]
-    }
+  expertise: [
+    { title: "Architecture", level: 95, color: "from-indigo-500 to-purple-500" },
+    { title: "Performance", level: 88, color: "from-green-500 to-teal-500" },
+    { title: "Security", level: 92, color: "from-red-500 to-pink-500" },
+    { title: "Innovation", level: 96, color: "from-yellow-500 to-orange-500" }
   ]
 }
 
@@ -123,69 +46,111 @@ export default function TechnicalSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.1 })
 
+  useEffect(() => {
+    if (isInView) {
+      anime({
+        targets: '.skill-card',
+        translateY: [50, 0],
+        opacity: [0, 1],
+        duration: 800,
+        easing: 'easeOutElastic(1, 0.8)',
+        delay: anime.stagger(100)
+      })
+
+      anime({
+        targets: '.expertise-bar',
+        width: [0, (el: HTMLElement) => el.dataset.level + '%'],
+        duration: 1200,
+        easing: 'easeOutQuart',
+        delay: anime.stagger(200)
+      })
+
+      anime({
+        targets: '.floating-element',
+        translateY: [0, -20, 0],
+        duration: 3000,
+        easing: 'easeInOutSine',
+        loop: true,
+        direction: 'alternate'
+      })
+    }
+  }, [isInView])
+
   return (
-    <section id="technical" className="py-20" ref={ref}>
-      <div className="mb-16 text-center">
+    <section id="technical" className="py-20 relative overflow-hidden" ref={ref}>
+      {/* Background Elements */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full blur-2xl"></div>
+      </div>
+
+      {/* Floating Tech Icons */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="floating-element absolute top-32 left-20 text-4xl opacity-20">⚡</div>
+        <div className="floating-element absolute top-40 right-32 text-3xl opacity-20" style={{ animationDelay: '1s' }}>🔮</div>
+        <div className="floating-element absolute bottom-32 left-32 text-3xl opacity-20" style={{ animationDelay: '2s' }}>💎</div>
+        <div className="floating-element absolute bottom-40 right-20 text-4xl opacity-20" style={{ animationDelay: '0.5s' }}>🌟</div>
+      </div>
+
+      {/* Header */}
+      <div className="mb-20 text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
         >
-          <Badge variant="outline" className="mb-4 px-4 py-1 text-sm border-primary/50 bg-primary/5">
-            Technical Excellence
-          </Badge>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            <AnimatedText text="Technical Expertise" />
+          <div className="inline-flex items-center gap-2 mb-6 px-6 py-2 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full border border-primary/30">
+            <span className="text-2xl">🚀</span>
+            <span className="text-sm font-medium text-primary">Technical Excellence</span>
+          </div>
+          
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+            <AnimatedText text="Tech Mastery" />
           </h2>
-          <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-            A comprehensive overview of my technical skills, architectural knowledge, and development practices
+          
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Crafting digital experiences with cutting-edge technologies
           </p>
         </motion.div>
       </div>
 
-      {/* Technical Skills */}
-      <div className="mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mb-8"
-        >
-          <h3 className="text-2xl font-bold mb-6 flex items-center">
-            <Code2 className="w-6 h-6 mr-3 text-primary" />
-            Core Technical Skills
-          </h3>
-        </motion.div>
-        
+      {/* Skills Grid */}
+      <div className="mb-24 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {technicalData.skills.map((skillGroup, groupIndex) => (
+          {technicalData.skills.map((skill, index) => (
             <motion.div
-              key={skillGroup.category}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: 0.2 + groupIndex * 0.1 }}
+              key={skill.category}
+              className="skill-card opacity-0"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="h-full gradient-border overflow-hidden group hover:border-primary/50 transition-all duration-300">
-                <CardContent className="p-6">
-                  <div className="mb-4 flex items-center">
-                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mr-3 text-primary">
-                      {skillGroup.icon}
-                    </div>
-                    <h4 className="text-lg font-bold">{skillGroup.category}</h4>
-                  </div>
+              <Card className="h-full group hover:scale-105 transition-all duration-500 overflow-hidden relative">
+                <div className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+                
+                <div className={`absolute inset-0 bg-gradient-to-r ${skill.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
+                </div>
 
-                  <div className="flex flex-wrap gap-2">
-                    {skillGroup.items.map((skill, index) => (
-                      <motion.div
-                        key={skill}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.3, delay: 0.3 + index * 0.05 + groupIndex * 0.1 }}
+                <CardContent className="p-6 relative z-10">
+                  <div className="text-4xl mb-4 text-center group-hover:scale-110 transition-transform duration-300">
+                    {skill.icon}
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-center mb-4 group-hover:text-primary transition-colors duration-300">
+                    {skill.category}
+                  </h3>
+                  
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {skill.items.map((item, itemIndex) => (
+                      <Badge 
+                        key={item} 
+                        className="bg-muted/50 hover:bg-primary/20 text-foreground transition-all duration-300 hover:scale-105"
+                        style={{ animationDelay: `${itemIndex * 50}ms` }}
                       >
-                        <Badge className="bg-muted hover:bg-primary/20 text-foreground transition-all duration-300">
-                          {skill}
-                        </Badge>
-                      </motion.div>
+                        {item}
+                      </Badge>
                     ))}
                   </div>
                 </CardContent>
@@ -195,212 +160,112 @@ export default function TechnicalSection() {
         </div>
       </div>
 
-      {/* Architecture & Patterns */}
-      <div className="mb-20">
+      {/* Expertise Visualization */}
+      <div className="mb-24 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mb-8"
+          className="mb-12 text-center"
         >
-          <h3 className="text-2xl font-bold mb-6 flex items-center">
-            <Layers className="w-6 h-6 mr-3 text-primary" />
-            Architecture & Design Patterns
+          <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            Expertise Levels
           </h3>
+          <p className="text-muted-foreground">Mastery across key technical domains</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {technicalData.architecture.map((arch, index) => (
+        <div className="max-w-4xl mx-auto space-y-6">
+          {technicalData.expertise.map((item, index) => (
             <motion.div
-              key={arch.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+              key={item.title}
+              initial={{ opacity: 0, x: -20 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+              transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+              className="group"
             >
-              <Card className="h-full gradient-border hover:border-primary/50 transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="text-lg">{arch.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">{arch.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {arch.patterns.map((pattern) => (
-                      <Badge key={pattern} variant="secondary" className="text-xs">
-                        {pattern}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-semibold text-lg">{item.title}</span>
+                <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors">
+                  {item.level}%
+                </span>
+              </div>
+              
+              <div className="relative h-3 bg-muted rounded-full overflow-hidden">
+                <div 
+                  className={`expertise-bar h-full bg-gradient-to-r ${item.color} rounded-full relative`}
+                  data-level={item.level}
+                  style={{ width: '0%' }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent animate-pulse"></div>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Development Methodologies */}
-      <div className="mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="mb-8"
-        >
-          <h3 className="text-2xl font-bold mb-6 flex items-center">
-            <Workflow className="w-6 h-6 mr-3 text-primary" />
-            Development Methodologies
-          </h3>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {technicalData.methodologies.map((method, index) => (
-            <motion.div
-              key={method.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-            >
-              <Card className="h-full gradient-border hover:border-primary/50 transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="text-lg">{method.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">{method.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {method.practices.map((practice) => (
-                      <Badge key={practice} variant="secondary" className="text-xs">
-                        {practice}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Performance & Optimization */}
-      <div className="mb-20">
+      {/* Interactive Tech Stack */}
+      <div className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.7 }}
-          className="mb-8"
+          className="mb-12 text-center"
         >
-          <h3 className="text-2xl font-bold mb-6 flex items-center">
-            <Zap className="w-6 h-6 mr-3 text-primary" />
-            Performance & Optimization
+          <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+            Tech Arsenal
           </h3>
+          <p className="text-muted-foreground">Technologies that power innovation</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {technicalData.performance.map((perf, index) => (
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+          {[
+            "React", "Next.js", "TypeScript", "Python", "Node.js", "Django",
+            "Flask", "GraphQL", "PostgreSQL", "MongoDB", "Docker", "AWS"
+          ].map((tech, index) => (
             <motion.div
-              key={perf.aspect}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+              key={tech}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 + index * 0.05 }}
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              className="group"
             >
-              <Card className="h-full gradient-border hover:border-primary/50 transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="text-lg">{perf.aspect}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {perf.metrics.map((metric) => (
-                      <Badge key={metric} variant="outline" className="text-xs">
-                        {metric}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
+              <Card className="p-4 text-center hover:shadow-lg transition-all duration-300 cursor-pointer bg-gradient-to-br from-muted/50 to-muted hover:from-primary/10 hover:to-secondary/10">
+                <div className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300">
+                  {tech === "React" && "⚛️"}
+                  {tech === "Next.js" && "▲"}
+                  {tech === "TypeScript" && "📘"}
+                  {tech === "Python" && "🐍"}
+                  {tech === "Node.js" && "🟢"}
+                  {tech === "Django" && "🎯"}
+                  {tech === "Flask" && "🍶"}
+                  {tech === "GraphQL" && "🔷"}
+                  {tech === "PostgreSQL" && "🐘"}
+                  {tech === "MongoDB" && "🍃"}
+                  {tech === "Docker" && "🐳"}
+                  {tech === "AWS" && "☁️"}
+                </div>
+                <span className="text-sm font-medium group-hover:text-primary transition-colors">
+                  {tech}
+                </span>
               </Card>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Security & Best Practices */}
-      <div className="mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.9 }}
-          className="mb-8"
-        >
-          <h3 className="text-2xl font-bold mb-6 flex items-center">
-            <Shield className="w-6 h-6 mr-3 text-primary" />
-            Security & Best Practices
-          </h3>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {technicalData.security.map((sec, index) => (
-            <motion.div
-              key={sec.area}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: 1.0 + index * 0.1 }}
-            >
-              <Card className="h-full gradient-border hover:border-primary/50 transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="text-lg">{sec.area}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {sec.practices.map((practice) => (
-                      <Badge key={practice} variant="outline" className="text-xs">
-                        {practice}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+      {/* Floating Action Button */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+        transition={{ duration: 0.5, delay: 1.2 }}
+        className="fixed bottom-8 right-8 z-50"
+      >
+        <div className="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white text-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 cursor-pointer">
+          ⚡
         </div>
-      </div>
-
-      {/* Tools & Infrastructure */}
-      <div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 1.1 }}
-          className="mb-8"
-        >
-          <h3 className="text-2xl font-bold mb-6 flex items-center">
-            <Monitor className="w-6 h-6 mr-3 text-primary" />
-            Tools & Infrastructure
-          </h3>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {technicalData.tools.map((toolGroup, index) => (
-            <motion.div
-              key={toolGroup.category}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
-            >
-              <Card className="h-full gradient-border hover:border-primary/50 transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="text-lg">{toolGroup.category}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {toolGroup.tools.map((tool) => (
-                      <Badge key={tool} variant="secondary" className="text-xs">
-                        {tool}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+      </motion.div>
     </section>
   )
 }
