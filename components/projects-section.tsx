@@ -21,6 +21,18 @@ import AnimatedText from "@/components/animated-text"
 // Updated project data with resume projects
 const projects = [
   {
+    id: 12,
+    title: "Ure Posh",
+    description: "Corporate POSH (Prevention of Sexual Harassment) solutions site with clean UI, fast performance, and accessibility",
+    image: "/Ure%20Posh_img.png",
+    tags: ["Next.js", "Tailwind CSS", "Corporate", "Compliance", "SEO"],
+    category: "frontend",
+    demoUrl: "https://ureposh-cjk2.vercel.app",
+    githubUrl: "#",
+    details:
+      "UREPOSH provides POSH policy development, training, investigation support, and compliance audits with an accessible design and responsive experience across devices.",
+  },
+  {
     id: 1,
     title: "Task Master",
     description: "AI-powered roadmap generator using Flask and Gemini API",
@@ -32,6 +44,55 @@ const projects = [
     details:
       "Task Master is an innovative AI-powered roadmap generator built with Flask and the Gemini API. The platform streamlines development processes by providing automated project planning and code integration capabilities. It generates comprehensive development roadmaps, task breakdowns, and implementation strategies based on project requirements. The system uses advanced AI to predict development challenges and suggest solutions, making it an invaluable tool for project managers and development teams.",
   },
+  {
+    id: 8,
+    title: "Code Weave",
+    description: "AI-assisted collaborative coding platform with real-time guidance",
+    image: "/Codeweave_img.png",
+    tags: ["Next.js", "TypeScript", "AI", "Collaboration"],
+    category: "fullstack",
+    demoUrl: "https://codeweave-4d5h.onrender.com",
+    githubUrl: "#",
+    details:
+      "Code Weave enables teams to build projects collaboratively with inline AI suggestions, code reviews, and live presence. Integrated tasks and snippets accelerate delivery.",
+  },
+  {
+    id: 9,
+    title: "NFT Vault",
+    description: "Secure NFT portfolio tracker with on-chain metadata and analytics",
+    image: "/NFT%20Vault_img.png",
+    tags: ["Next.js", "Web3", "Ethers.js", "Design"],
+    category: "frontend",
+    demoUrl: "https://nft-valut-o5of.vercel.app/",
+    githubUrl: "#",
+    details:
+      "NFT Vault displays wallet NFTs with trait analytics, floor tracking, and beautiful galleries. Uses on-chain reads and cached metadata for speed.",
+  },
+  {
+    id: 10,
+    title: "Shadow Mesh",
+    description: "3D WebGL micro-interactions library and demo gallery",
+    image: "/ShadowMesh.img.png",
+    tags: ["Three.js", "WebGL", "Framer Motion", "UX"],
+    category: "frontend",
+    demoUrl: "https://shadowmesh.vercel.app",
+    githubUrl: "#",
+    details:
+      "Shadow Mesh showcases performant 3D interactions, depth-based shadows, and post-processing effects packaged as reusable components.",
+  },
+  {
+    id: 11,
+    title: "Messaging App",
+    description: "Real-time messaging with typing indicators, presence, and attachments",
+    image: "/placeholder.svg?height=600&width=800",
+    tags: ["Next.js", "WebSockets", "Redis", "Prisma"],
+    category: "fullstack",
+    demoUrl: "#",
+    githubUrl: "#",
+    details:
+      "A polished chat experience with optimistic updates, delivery receipts, and unread batching. Stores media efficiently and scales horizontally.",
+  },
+  
   {
     id: 2,
     title: "Voice Automation",
@@ -48,10 +109,10 @@ const projects = [
     id: 3,
     title: "CodeWeave",
     description: "AI-driven collaborative platform using Python and Google APIs for stepwise project building",
-    image: "/placeholder.svg?height=600&width=800",
+    image: "/Codeweave_img.png",
     tags: ["Python", "Google APIs", "AI", "Collaborative Platform", "Real-time Guidance"],
     category: "ai",
-    demoUrl: "#",
+    demoUrl: "https://codeweave-4d5h.onrender.com",
     githubUrl: "#",
     details:
       "CodeWeave is an AI-driven collaborative platform developed using Python and Google APIs that provides stepwise project building with real-time guidance. The platform features an intuitive interface where developers can collaborate on coding projects while receiving intelligent suggestions and guidance from the AI system. It offers code analysis, bug detection, performance optimization recommendations, and learning resources tailored to the specific project context. The system supports multiple programming languages and integrates seamlessly with popular development environments.",
@@ -72,7 +133,7 @@ const projects = [
     id: 5,
     title: "SheetlaMandir.in",
     description: "Live temple website providing event updates and visitor information with mobile-responsive design",
-    image: "/placeholder.svg?height=600&width=800",
+    image: "/SheetlaMandir_img.png",
     tags: ["Web Development", "Responsive Design", "Content Management", "Event Updates", "User Experience"],
     category: "frontend",
     demoUrl: "https://sheetlamandir.in",

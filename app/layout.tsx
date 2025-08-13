@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import ParticleBackground from "@/components/particle-background"
+import ThinkstackLoader from "@/components/thinkstack-loader"
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
             <main className="flex-1 z-10">{children}</main>
             <Footer />
           </div>
+          <ThinkstackLoader />
         </ThemeProvider>
       </body>
     </html>

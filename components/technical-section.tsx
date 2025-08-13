@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import { motion, useInView } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -10,52 +10,64 @@ const technicalData = {
   skills: [
     {
       category: "Frontend",
-      items: ["React", "Next.js", "TypeScript", "Tailwind", "Framer Motion", "Three.js"],
+      items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Three.js"],
       color: "from-blue-500 to-cyan-500",
       icon: "⚛️"
     },
     {
+      category: "UI / UX",
+      items: ["Design Systems", "Accessibility (a11y)", "Responsive Design", "Animations", "Micro-interactions", "Theming"],
+      color: "from-purple-500 to-pink-500",
+      icon: "🎨"
+    },
+    {
       category: "Backend",
-      items: ["Node.js", "Python", "Django", "Flask", "Express", "GraphQL"],
-      color: "from-green-500 to-emerald-500",
+      items: ["Node.js", "Express", "REST", "GraphQL", "WebSockets"],
+      color: "from-teal-500 to-emerald-500",
       icon: "🔧"
     },
     {
-      category: "Full Stack",
-      items: ["MERN Stack", "Next.js Full Stack", "API Design", "Database Design", "Authentication", "Deployment"],
-      color: "from-indigo-500 to-blue-500",
-      icon: "🌐"
+      category: "Database",
+      items: ["PostgreSQL", "MongoDB", "Prisma", "Redis"],
+      color: "from-orange-500 to-amber-500",
+      icon: "🗄️"
     },
     {
-      category: "Python Developer",
-      items: ["Python", "Django", "Flask", "FastAPI", "Pandas", "NumPy", "Scikit-learn"],
+      category: "Deployment",
+      items: ["Vercel", "Docker", "CI/CD", "AWS"],
       color: "from-yellow-500 to-orange-500",
-      icon: "🐍"
-    },
-    {
-      category: "AI & Data",
-      items: ["Machine Learning", "AI Integration", "NLP", "Gemini API", "TensorFlow"],
-      color: "from-purple-500 to-pink-500",
-      icon: "🤖"
-    },
-    {
-      category: "DevOps",
-      items: ["Git", "Docker", "CI/CD", "AWS", "Vercel", "PostgreSQL"],
-      color: "from-orange-500 to-red-500",
       icon: "🚀"
+    },
+    {
+      category: "Tooling",
+      items: ["Vite", "Webpack", "ESLint", "Prettier", "Storybook"],
+      color: "from-green-500 to-emerald-500",
+      icon: "🛠️"
     }
   ],
   expertise: [
-    { title: "Architecture", level: 95, color: "from-indigo-500 to-purple-500" },
-    { title: "Performance", level: 88, color: "from-green-500 to-teal-500" },
-    { title: "Security", level: 92, color: "from-red-500 to-pink-500" },
-    { title: "Innovation", level: 96, color: "from-yellow-500 to-orange-500" }
+    { title: "Performance", level: 95, color: "from-green-500 to-teal-500" },
+    { title: "Accessibility", level: 92, color: "from-indigo-500 to-purple-500" },
+    { title: "Animations", level: 90, color: "from-pink-500 to-rose-500" },
+    { title: "Code Quality", level: 93, color: "from-blue-500 to-cyan-500" },
+    
   ]
 }
 
 export default function TechnicalSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.1 })
+  const [isChatOpen, setIsChatOpen] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
+
+  useEffect(() => {
+    if (!isChatOpen) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsChatOpen(false)
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [isChatOpen])
 
   return (
     <section id="technical" className="py-20 relative overflow-hidden" ref={ref}>
@@ -106,16 +118,16 @@ export default function TechnicalSection() {
           transition={{ duration: 0.5 }}
         >
           <div className="inline-flex items-center gap-2 mb-6 px-6 py-2 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full border border-primary/30">
-            <span className="text-2xl">🚀</span>
-            <span className="text-sm font-medium text-primary">Technical Excellence</span>
+            <span className="text-2xl">🎯</span>
+            <span className="text-sm font-medium text-primary">Frontend Expertise</span>
           </div>
           
           <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-            <AnimatedText text="Tech Mastery" />
+            <AnimatedText text="Frontend Mastery" />
           </h2>
           
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Crafting digital experiences with cutting-edge technologies
+            Building fast, accessible, and beautiful web interfaces
           </p>
         </motion.div>
       </div>
@@ -231,16 +243,17 @@ export default function TechnicalSection() {
           className="mb-12 text-center"
         >
           <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
-            Tech Arsenal
+            Frontend Stack
           </h3>
-          <p className="text-muted-foreground">Technologies that power innovation</p>
+          <p className="text-muted-foreground">Tools I use daily</p>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
           {[
-            "React", "Next.js", "TypeScript", "Python", "Node.js", "Django",
-            "Flask", "FastAPI", "GraphQL", "PostgreSQL", "MongoDB", "Docker",
-            "AWS", "Pandas", "NumPy", "Scikit-learn", "Express", "Vercel"
+            "React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Three.js",
+            "Node.js", "Express", "PostgreSQL", "MongoDB", "Prisma", "Redis",
+            "Vercel", "Docker", "CI/CD", "AWS",
+            "Radix UI", "shadcn/ui", "Vite", "Storybook", "ESLint", "Prettier"
           ].map((tech, index) => (
             <motion.div
               key={tech}
@@ -262,24 +275,28 @@ export default function TechnicalSection() {
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {tech === "React" && "⚛️"}
-                  {tech === "Next.js" && "▲"}
-                  {tech === "TypeScript" && "📘"}
-                  {tech === "Python" && "🐍"}
-                  {tech === "Node.js" && "🟢"}
-                  {tech === "Django" && "🎯"}
-                  {tech === "Flask" && "🍶"}
-                  {tech === "FastAPI" && "⚡"}
-                  {tech === "GraphQL" && "🔷"}
-                  {tech === "PostgreSQL" && "🐘"}
-                  {tech === "MongoDB" && "🍃"}
-                  {tech === "Docker" && "🐳"}
-                  {tech === "AWS" && "☁️"}
-                  {tech === "Pandas" && "🐼"}
-                  {tech === "NumPy" && "🔢"}
-                  {tech === "Scikit-learn" && "🧠"}
-                  {tech === "Express" && "🚂"}
-                  {tech === "Vercel" && "▲"}
+                {tech === "React" && "⚛️"}
+                {tech === "Next.js" && "▲"}
+                {tech === "TypeScript" && "📘"}
+                {tech === "Tailwind CSS" && "🌬️"}
+                {tech === "Framer Motion" && "🎞️"}
+                {tech === "Three.js" && "🧊"}
+                {tech === "Node.js" && "🟢"}
+                {tech === "Express" && "🚂"}
+                {tech === "PostgreSQL" && "🐘"}
+                {tech === "MongoDB" && "🍃"}
+                {tech === "Prisma" && "🔷"}
+                {tech === "Redis" && "🧠"}
+                {tech === "Vercel" && "▲"}
+                {tech === "Docker" && "🐳"}
+                {tech === "CI/CD" && "🔁"}
+                {tech === "AWS" && "☁️"}
+                {tech === "Radix UI" && "🧩"}
+                {tech === "shadcn/ui" && "✨"}
+                {tech === "Vite" && "⚡"}
+                {tech === "Storybook" && "📖"}
+                {tech === "ESLint" && "🧹"}
+                {tech === "Prettier" && "✨"}
                 </motion.div>
                 <span className="text-sm font-medium group-hover:text-primary transition-colors">
                   {tech}
@@ -299,10 +316,74 @@ export default function TechnicalSection() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
       >
-        <div className="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white text-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer">
+        <button
+          type="button"
+          aria-label="Open chat"
+          onClick={() => setIsChatOpen(true)}
+          className="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white text-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/60"
+        >
           ⚡
-        </div>
+        </button>
       </motion.div>
+
+      {isChatOpen && (
+        <div className="fixed inset-0 z-[100]" role="dialog" aria-modal="true">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setIsChatOpen(false)}
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.25 }}
+            className={`absolute inset-0 sm:inset-auto sm:bottom-6 sm:right-6 ${isExpanded ? "sm:max-w-[900px] sm:h-[90vh]" : "sm:max-w-[420px] sm:h-[80vh]"} sm:w-[92vw] w-full h-full bg-background border border-border rounded-none sm:rounded-xl overflow-hidden shadow-2xl`}
+          >
+            <div className="flex h-full flex-col">
+              <div className="relative z-10 flex items-center justify-between px-3 py-2 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">💬</span>
+                  <div>
+                    <p className="text-sm font-semibold leading-none">Assistant</p>
+                    <p className="text-xs text-muted-foreground">Ask me anything</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    aria-label={isExpanded ? "Collapse" : "Expand"}
+                    onClick={() => setIsExpanded(v => !v)}
+                    className="rounded-md px-2 py-1 text-xs border border-border bg-muted/50 hover:bg-muted transition"
+                  >
+                    {isExpanded ? "Collapse" : "Expand"}
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Close chat"
+                    onClick={() => setIsChatOpen(false)}
+                    className="rounded-md px-2 py-1 text-xs border border-border bg-muted/50 hover:bg-muted transition"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+              <div className="relative flex-1">
+                <iframe
+                  title="Thinkstack AI Chat"
+                  src="https://app.thinkstack.ai/bot/index.html?chatbot_id=689b7c8c5db129ec5b2bf80f&type=inline"
+                  loading="lazy"
+                  frameBorder={0}
+                  className="absolute inset-0 w-full h-full bg-background"
+                />
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </section>
   )
 }
